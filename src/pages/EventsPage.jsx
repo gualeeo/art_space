@@ -60,7 +60,7 @@ function EventsPage() {
         ) : (
           events.map(event => (
             <div key={event.id} className="event-card">
-              <div className="event-date"><span>{event.date}</span></div> {/* дата мероприятия */}
+              <div className="event-date">Дата начала: <span>{event.date}</span></div> {/* дата мероприятия */}
               <div className="event-info">
                 <h3 className="event-title">{event.title}</h3> {/* название мероприятия */}
                 <p className="event-description">{event.description}</p> {/* описание */}

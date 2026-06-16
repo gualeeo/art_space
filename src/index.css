@@ -702,7 +702,7 @@ footer {
   border: 2px solid #000;
   border-radius: 10px;
   padding: 40px;
-  background-color: #fff;
+  background-color: #eee6e6;
   min-height: 300px;
 }
 
@@ -1498,6 +1498,7 @@ footer {
   
   .work-title h3 {
     font-size: 16px;
+    outline: none;
   }
   
   .work-page {
@@ -1695,6 +1696,7 @@ footer {
   
   .work-title h3 {
     font-size: 14px;
+    outline: none;
   }
   
   .sidebar-btn {
@@ -1849,3 +1851,4 @@ footer {
 .loading-container {
   padding: 40px;
 }
+

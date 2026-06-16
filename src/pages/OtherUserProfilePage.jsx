@@ -24,16 +24,30 @@ function OtherUserProfilePage() {
     loadUser();
   }, [username]);
 
-  if (loading) return <div className="loading-indicator"><div className="spinner"></div><p>Загрузка...</p></div>;
-  if (error) return <div className="error-message">{error}</div>;
-  if (!user) return <div>Пользователь не найден</div>;
+  if (loading) {
+    return (
+      <div className="profile-main">
+        <div className="loading-indicator">
+          <div className="spinner"></div>
+          <p>Загрузка профиля...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !user) {
+    return (
+      <div className="profile-main">
+        <h1>Ошибка</h1>
+        <p>{error || 'Пользователь не найден'}</p>
+        <Link to="/gallery" className="btn-primary">Вернуться в галерею</Link>
+      </div>
+    );
+  }
 
   return (
     <div className="profile-main">
       <div className="profile-container">
-        <div className="profile-sidebar">
-          <Link to="/favorites" className="sidebar-btn">Избранное</Link>
-        </div>
         <div className="profile-content">
           <div className="profile-info-block">
             <div className="profile-top-row">
@@ -43,7 +57,13 @@ function OtherUserProfilePage() {
                 </div>
               </div>
               <div className="right-column">
+                {/* имя пользователя */}
                 <h2 className="profile-name-display">{user.username}</h2>
+                
+                {/* почта */}
+                <p className="profile-name-display">{user.email || 'Email не указан'}</p>
+                
+                {/* биография */}
                 <p className="profile-description">{user.bio || 'Описание не указано'}</p>
               </div>
             </div>
@@ -58,15 +78,26 @@ function OtherUserProfilePage() {
                   <Link to={`/work/${work.id}`} key={work.id} className="work-link">
                     <div className="work-card">
                       <div className="work-image">
-                        <img src={work.image_url || '/demonstration.jpg'} alt={work.title} />
+                        <img 
+                          src={work.image_url || '/demonstration.jpg'} 
+                          alt={work.title}
+                          onError={(e) => { e.target.src = '/demonstration.jpg'; }}
+                        />
                       </div>
                       <div className="work-title">
                         <h3>{work.title}</h3>
+                        <p>{work.category || work.technique}</p>
                       </div>
                     </div>
                   </Link>
                 ))}
               </div>
+            </div>
+          )}
+
+          {(!user.artworks || user.artworks.length === 0) && (
+            <div className="user-works-section">
+              <p className="no-works-message">У пользователя пока нет работ</p>
             </div>
           )}
         </div>

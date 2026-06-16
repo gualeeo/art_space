@@ -1,5 +1,5 @@
 const USE_MOCK = true; //для бэкенда
-const API_BASE = 'http://localhost:5000'; //адрес бэкенда
+const API_BASE = 'http://192.168.0.102:5000'; //адрес бэкенда
 
 //мок данные, когда USE_MOCK=true
 let MOCK_WORKS = [
@@ -694,18 +694,13 @@ export const getEvents = async () => {
 export const getUserByUsername = async (username) => {
   if (USE_MOCK) {
     await delay();
-    // Поиск пользователя по username в моках
+    //поиск пользователя по username в моках
     if (username === MOCK_USER.username) {
       return { ...MOCK_USER, artworks: MOCK_WORKS };
     }
-
-    return { 
-      id: 999, 
-      username: username, 
-      bio: 'Описание не указано',
-      avatar_url: '/demonstration.jpg',
-      artworks: []
-    };
+    const response = await fetch(`${API_BASE_URL}/profile/${username}`);
+    if (!response.ok) throw new Error('Пользователь не найден');
+    return response.json();
   }
 
   //реальный запрос
